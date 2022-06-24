@@ -1,3 +1,4 @@
+import { BreadcrumbList } from '../vite-env'
 import { Link } from 'react-router-dom'
 import React from 'react'
 
@@ -8,10 +9,9 @@ const Breadcrumbs = ({ crumbs }: BreadcrumbList) => {
 
   return (
     <nav>
-      {/**
-       * Faz o link do último para qualquer caminho anterior
-       */}
+      {/* <ada-breadcrumbs> */}
       {crumbs.map(({ name, path }, key) => {
+        // Linka do último para qualquer link anterior
         const isLastCrumb = key + 1 === crumbs.length
         return isLastCrumb ? (
           <span key={key}>{name}</span>
@@ -21,6 +21,7 @@ const Breadcrumbs = ({ crumbs }: BreadcrumbList) => {
           </Link>
         )
       })}
+      {/* </ada-breadcrumbs> */}
     </nav>
   )
 }
