@@ -1,0 +1,41 @@
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+
+nav > span:not(:first-child)::before,
+nav > a:not(:first-child)::before {
+  content: '>';
+  display: inlie-flex;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  text-decoration: none; 
+}
+
+nav > span:not(:first-child)::before:hover,
+nav > a:not(:first-child)::before:hover {
+  text-decoration: none;
+}
+
+.mr-4 {
+  margin-right: 4px;
+}
+.bold {
+  font-weight: bold;
+}
+
+a:active,
+a:hover,
+a:focus,
+a:link {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
