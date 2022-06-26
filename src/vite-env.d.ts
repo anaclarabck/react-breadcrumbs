@@ -18,32 +18,6 @@ interface RouteConfig extends Breadcrumb {
 
 type RouteParams = Record<string, string>
 
-interface RouteNavProps<P = Record<string, string>> {
-  history: History
-  location: Location
-  match: Match<P>
-}
-
-interface History {
-  length: number
-  action: string
-  location: Location
-}
-
-interface Location {
-  pathname: string
-  search: string
-  hash: string
-  key: string
-}
-
-interface Match<P = Record<string, string>> {
-  path: string
-  url: string
-  isExact: boolean
-  params: P | null
-}
-
 type RoutePath<K extends keyof Routes> = Record<K, Routes[K]>
 
 type PathParams<Path extends string> =

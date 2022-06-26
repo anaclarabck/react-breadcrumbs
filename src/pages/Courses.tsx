@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import usePath from '../hooks/path'
 import { uuid } from '../utilities/uuid'
 
 const courses = [
@@ -10,6 +11,13 @@ const courses = [
 ]
 
 const Courses = () => {
+
+
+  // const links = Object.entries({
+  //   [usePath(Routes.CourseLiveLectures, match.params)]: 'Gravações',
+  //   [usePath(Routes.CourseSolutions, match.params)]: 'Gabaritos',
+  // })
+
   return (
     <>
       <h2>Courses</h2>
@@ -17,7 +25,7 @@ const Courses = () => {
       <ul>
         {courses.map(({ id, name }) => (
           <li className="underline text-blue-500" key={id}>
-            <Link to={`courses/${id}`}>{name}</Link>
+            <Link to={`learn/course/${id}`}>{name}</Link>
           </li>
         ))}
       </ul>

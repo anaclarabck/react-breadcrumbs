@@ -1,23 +1,15 @@
-import {
-  BrowserRouter,
-  Switch,
-  Route,
-  Link,
-  RouterProps,
-  RouteChildrenProps,
-} from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import Breadcrumbs from './components/Breadcrumbs'
 import { RouteConfig } from './vite-env'
+import useCrumbs from './hooks/crumbs'
 import routes from './config/routes'
 import React from 'react'
-import useCrumbs from './hooks/crumbs'
 
 const Layout = (): React.ReactElement => {
   return (
     <BrowserRouter>
       <nav>
-        <Link to="/"> Home </Link>
-        <Link to="/courses"> Cursos </Link>
+        <Link to="/learn"> Cursos </Link>
       </nav>
 
       <Switch>
@@ -29,12 +21,10 @@ const Layout = (): React.ReactElement => {
             render={(props: any) => {
               const crumbs = useCrumbs(routes, props)
 
-              
-              console.log(`Generated crumbs for ${props.match.path}`)
-              crumbs.map(({ name, path }) => console.log({ name, path }))
+              // console.log(`Generated crumbs for ${props.match.path}`)
+              // crumbs.map(({ name, path }) => console.info({ name, path }))
 
-              console.log(`Debug props for${props.match.path}`)
-              console.log(props)
+              // console.groupCollapsed(crumbs)
 
               return (
                 <div className="p-8">

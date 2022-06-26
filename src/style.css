@@ -2,7 +2,6 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
@@ -16,18 +15,13 @@ nav > a:not(:first-child)::before {
   height: 16px;
   margin-right: 6px;
   text-decoration: none; 
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 nav > span:not(:first-child)::before:hover,
 nav > a:not(:first-child)::before:hover {
   text-decoration: none;
-}
-
-.mr-4 {
-  margin-right: 4px;
-}
-.bold {
-  font-weight: bold;
 }
 
 a:active,
