@@ -22,10 +22,10 @@ const Layout = (): React.ReactElement => {
               const crumbs = useCrumbs(routes, props)
 
               return (
-                <div className="p-8">
+                <>
                   <Breadcrumbs crumbs={crumbs} {...props} />
                   <Component {...props} />
-                </div>
+                </>
               )
             }}
           />

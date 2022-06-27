@@ -5,17 +5,12 @@ import { PathArgs, RouteConfig } from '../vite-env'
 import Module from '../pages/Module'
 import { courses } from '../infra/courses'
 
-// /learn/course/5e938f69-6e32-43b3-9685-c936530fd326/module/a8675132-afce-4549-830a-fbcf92f8815f/section/6b0594be-6cfd-4d4c-b56c-68e1413659d3/lesson/708d2343-3f7d-4ef7-bb2a-e343124d5bb2/solution
-
 const enum Routes {
   Home = '/',
   Learn = '/learn',
   Course = '/learn/course/:courseId',
   CourseModule = '/learn/course/:courseId/module/:moduleId',
-  CourseSection = '/learn/course/:courseId/module/:moduleId/section/:sectionId',
-  CourseSectionLesson = '/learn/course/:courseId/module/:moduleId/section/:sectionId/lesson/:lessonId',
-  CourseLiveLectures = '/learn/course/:courseId/live-lectures',
-  CourseSolutions = '/learn/course/:courseId/solutions',
+  CourseSection = '/learn/course/:courseId/module/:moduleId/section/:sectionId'
 }
 
 const routes: RouteConfig[] = [
@@ -27,28 +22,34 @@ const routes: RouteConfig[] = [
   { path: Routes.Learn, name: () => 'Cursos', Component: Courses },
   {
     path: Routes.Course,
-    name: (props: PathArgs<Routes.Course>) => {
-      return courses.find((course) => course.id === props.courseId).name
+    name: ({ courseId }: PathArgs<Routes.Course>) => {
+      const course = courses.find(({ id }) => id === courseId)
+      return course.name
     },
     Component: Course,
   },
   {
     path: Routes.CourseModule,
-    name: (props: PathArgs<Routes.CourseModule>) => {
-      const course = courses.find((course) => course.id === props.courseId)
-      return course.modules.find((module) => module.id === props.moduleId).name
+    name: ({ moduleId, courseId }: PathArgs<Routes.CourseModule>) => {
+      const course = courses.find(({ id }) => id === courseId)
+      const module = course.modules.find(({ id }) => id === moduleId)
+      return module.name
     },
     Component: Module,
   },
   {
     path: Routes.CourseSection,
-    name: () => ':sectionId',
-    Component: Course,
-  },
-  {
-    path: Routes.CourseSectionLesson,
-    name: () => ':lessonId',
-    Component: Course,
+    name: ({
+      moduleId,
+      courseId,
+      sectionId,
+    }: PathArgs<Routes.CourseSection>) => {
+      const course = courses.find(({ id }) => id === courseId)
+      const module = course.modules.find(({ id }) => id === moduleId)
+      const section = module.sections.find(({ id }) => id === sectionId)
+      return section.name
+    },
+    Component: Module,
   },
 ]
 

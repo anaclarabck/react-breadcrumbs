@@ -1,40 +1,25 @@
-import { RouteChildrenProps } from 'react-router-dom'
+import { Link, RouteChildrenProps } from 'react-router-dom'
+import { courses } from '../infra/courses'
+import { PathArgs } from '../vite-env'
 import { Routes } from '../config/routes'
-import { uuid } from '../utilities/uuid'
 import usePath from '../hooks/path'
 import React from 'react'
 
-interface ModuleProps {
-  ModuleId: string
-}
+type ModuleProps = RouteChildrenProps<PathArgs<Routes.CourseSection>>
 
-const Module = (props: RouteChildrenProps<ModuleProps>) => {
-  const { match } = props
+const Module = ({ match }: ModuleProps) => {
+  const { params } = match
 
-  const sections = [
-    {
-      id: uuid.long(),
-      name: 'Section 1',
-      lessons: [
-        { id: uuid.long(), name: 'lesson 1' },
-        { id: uuid.long(), name: 'lesson 2' },
-        { id: uuid.long(), name: 'lesson 3' }
-      ],
-    },
-    {
-      id: uuid.long(),
-      name: 'Section 2',
-      lessons: [{ id: uuid.long(), name: 'lesson 1' }],
-    },
-    {
-      id: uuid.long(),
-      name: 'Section 3',
-      lessons: [{ id: uuid.long(), name: 'lesson 1' }],
-    },
-  ]
+  const course = courses.find((course) => course.id === params.courseId)
+  const module = course.modules.find(({ id }) => id === params.moduleId)
 
-  const sectionCards = sections.map(({ id, name, lessons }) => {
+  let sectionId = params.sectionId
+    ? module.sections.find(({ id }) => id === params.sectionId).id
+    : false
+
+  const sectionCards = module.sections.map(({ id, name, lessons }) => {
     return {
+      id,
       path: usePath(Routes.CourseSection, { ...match.params, sectionId: id }),
       name: name,
       lessons: lessons.map(({ id, name }) => ({
@@ -49,9 +34,11 @@ const Module = (props: RouteChildrenProps<ModuleProps>) => {
       <h2>Module </h2>
 
       <ul>
-        {sectionCards.map(({ path, name, lessons }) => (
-          <details key={'details' + path}>
-            <summary key={'details' + path}>{name}</summary>
+        {sectionCards.map(({ path, name, lessons, id }) => (
+          <details key={'details' + path} open={sectionId === id}>
+            <summary key={'details' + path}>
+              <Link to={path}>{name}</Link>
+            </summary>
 
             {lessons.map((lesson) => (
               <article key={lesson.name}>{lesson.name}</article>
