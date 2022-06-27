@@ -1,23 +1,23 @@
-import { BreadcrumbList } from '../vite-env'
-import { Link } from 'react-router-dom'
+import { Breadcrumb } from '../vite-env'
+import { Link, RouteChildrenProps } from 'react-router-dom'
 import React from 'react'
 
-const Breadcrumbs = ({ crumbs }: BreadcrumbList) => {
-  if (crumbs.length <= 1) {
+const Breadcrumbs = (props: RouteChildrenProps & { crumbs: Breadcrumb[] }) => {
+  if (props.crumbs.length <= 1) {
     return null
   }
 
   return (
     <nav>
       {/* <ada-breadcrumbs> */}
-      {crumbs.map(({ name, path }, key) => {
+      {props.crumbs.map(({ name = () => '', path }, key) => {
         // Linka do último para qualquer link anterior
-        const isLastCrumb = key + 1 === crumbs.length
+        const isLastCrumb = key + 1 === props.crumbs.length
         return isLastCrumb ? (
-          <span key={key}>{name}</span>
+          <span key={key}>{name(props.match.params)}</span>
         ) : (
           <Link key={key} to={path}>
-            {name}
+            {name(props.match.params)}
           </Link>
         )
       })}

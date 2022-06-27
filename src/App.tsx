@@ -21,14 +21,9 @@ const Layout = (): React.ReactElement => {
             render={(props: any) => {
               const crumbs = useCrumbs(routes, props)
 
-              // console.log(`Generated crumbs for ${props.match.path}`)
-              // crumbs.map(({ name, path }) => console.info({ name, path }))
-
-              // console.groupCollapsed(crumbs)
-
               return (
                 <div className="p-8">
-                  <Breadcrumbs crumbs={crumbs} />
+                  <Breadcrumbs crumbs={crumbs} {...props} />
                   <Component {...props} />
                 </div>
               )

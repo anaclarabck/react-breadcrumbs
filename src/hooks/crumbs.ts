@@ -9,10 +9,10 @@ const useCrumbs = <R extends RouteConfig, P extends RouteChildrenProps>(
     routes
       .filter(({ path }) => match.path.includes(path))
       // Obtenha todas as rotas que contêm a atual.
-      .map(({ path, ...rest }) => {
+      .map(({ path, name, ...rest }) => {
         const params = Object.keys(match.params)
 
-        if (params.length === 0) {
+        if (params.length) {
           // Troque quaisquer rotas dinâmicas com seus valores de parâmetro.
           // Por exemplo. "/courses/:courseId" se tornará "/courses/1"
           const swapPathParam = (path: string, param: string) => {
@@ -21,7 +21,7 @@ const useCrumbs = <R extends RouteConfig, P extends RouteChildrenProps>(
 
           path = params.reduce(swapPathParam, path)
         }
-        return { path, ...rest }
+        return { path, ...rest, name }
       })
   )
 }

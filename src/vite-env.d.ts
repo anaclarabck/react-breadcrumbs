@@ -1,10 +1,10 @@
 /// <reference types="vite/client" />
 
-import { RouteChildrenProps } from "react-router-dom"
+import { RouteChildrenProps } from 'react-router-dom'
 
 interface Breadcrumb {
-  name: string
   path: string
+  name: (props: PathArgs<string>) => string
 }
 
 interface BreadcrumbList {
@@ -12,8 +12,7 @@ interface BreadcrumbList {
 }
 
 interface RouteConfig extends Breadcrumb {
-  path: string
-  Component: () => JSX.Element
+  Component: (props: RouteChildrenProps) => JSX.Element
 }
 
 type RouteParams = Record<string, string>
@@ -32,4 +31,3 @@ type PathParams<Path extends string> =
 type PathArgs<Path extends string> = {
   [K in PathParams<Path>]: string
 }
-
