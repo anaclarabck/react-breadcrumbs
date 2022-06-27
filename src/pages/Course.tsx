@@ -1,17 +1,16 @@
-import { Routes } from '../config/routes'
 import { Link, RouteChildrenProps } from 'react-router-dom'
+import { Routes } from '../config/routes'
+import service from '../infra/service'
+import { PathArgs } from '../vite-env'
 import usePath from '../hooks/path'
 import React from 'react'
-import { courses } from '../infra/courses'
 
-interface CourseProps {
-  courseId: string
-}
+type CourseProps = RouteChildrenProps<PathArgs<Routes.Course>>
 
-const Course = (props: RouteChildrenProps<CourseProps>) => {
+const Course = (props: CourseProps) => {
   const { match } = props
 
-  const course = courses.find((course) => course.id === match.params.courseId)
+  const course = service.getCourse(match.params)
 
   const modules = course.modules.map(({ id, name }) => {
     return {

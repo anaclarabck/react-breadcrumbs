@@ -31,3 +31,26 @@ type PathParams<Path extends string> =
 type PathArgs<Path extends string> = {
   [K in PathParams<Path>]: string
 }
+
+interface Course {
+  id: string
+  name: string
+  modules: CourseModule[]
+}
+
+interface CourseModule {
+  id: string
+  name: string
+  sections: CourseSection[]
+}
+
+interface CourseSection {
+  id: string
+  name: string
+  lessons: CourseLesson[]
+}
+
+interface CourseLesson {
+  id: string
+  name: string
+}

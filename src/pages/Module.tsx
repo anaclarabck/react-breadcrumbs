@@ -1,7 +1,7 @@
 import { Link, RouteChildrenProps } from 'react-router-dom'
-import { courses } from '../infra/courses'
-import { PathArgs } from '../vite-env'
 import { Routes } from '../config/routes'
+import service from '../infra/service'
+import { PathArgs } from '../vite-env'
 import usePath from '../hooks/path'
 import React from 'react'
 
@@ -10,12 +10,9 @@ type ModuleProps = RouteChildrenProps<PathArgs<Routes.CourseSection>>
 const Module = ({ match }: ModuleProps) => {
   const { params } = match
 
-  const course = courses.find((course) => course.id === params.courseId)
-  const module = course.modules.find(({ id }) => id === params.moduleId)
+  const module = service.getModule(params)
 
-  let sectionId = params.sectionId
-    ? module.sections.find(({ id }) => id === params.sectionId).id
-    : false
+  let sectionId = params.sectionId ? service.getSection(params).id : false
 
   const sectionCards = module.sections.map(({ id, name, lessons }) => {
     return {

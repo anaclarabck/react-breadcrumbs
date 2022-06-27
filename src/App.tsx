@@ -8,10 +8,6 @@ import React from 'react'
 const Layout = (): React.ReactElement => {
   return (
     <BrowserRouter>
-      <nav>
-        <Link to="/learn"> Cursos </Link>
-      </nav>
-
       <Switch>
         {routes.map(({ path, Component }: RouteConfig, key) => (
           <Route
