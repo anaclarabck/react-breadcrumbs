@@ -1,5 +1,3 @@
-import Recordings from '../pages/Recordings'
-import Solutions from '../pages/Solutions'
 import Courses from '../pages/Courses'
 import Course from '../pages/Course'
 import Home from '../pages/Home'
@@ -51,16 +49,6 @@ const routes: RouteConfig[] = [
     path: Routes.CourseSectionLesson,
     name: () => ':lessonId',
     Component: Course,
-  },
-  {
-    path: Routes.CourseSolutions,
-    name: () => 'Gabatitos',
-    Component: Solutions,
-  },
-  {
-    path: Routes.CourseLiveLectures,
-    name: () => 'Gravações',
-    Component: Recordings,
   },
 ]
 
