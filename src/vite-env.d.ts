@@ -4,7 +4,7 @@ import { RouteChildrenProps } from 'react-router-dom'
 
 interface Breadcrumb {
   path: string
-  name: (props: PathArgs<string>) => string
+  name: (props: PathArgs<string>) => string | Promise<string>
 }
 
 interface BreadcrumbList {

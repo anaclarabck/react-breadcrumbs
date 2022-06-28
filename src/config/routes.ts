@@ -10,7 +10,7 @@ const enum Routes {
   Learn = '/learn',
   Course = '/learn/course/:courseId',
   CourseModule = '/learn/course/:courseId/module/:moduleId',
-  CourseSection = '/learn/course/:courseId/module/:moduleId/section/:sectionId'
+  CourseSection = '/learn/course/:courseId/module/:moduleId/section/:sectionId',
 }
 
 const routes: RouteConfig[] = [
@@ -23,17 +23,26 @@ const routes: RouteConfig[] = [
   {
     path: Routes.Course,
     name: ({ courseId }: PathArgs<Routes.Course>) => {
-      const course = courses.find(({ id }) => id === courseId)
-      return course.name
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const course = courses.find(({ id }) => id === courseId)
+
+          resolve(course.name)
+        }, 2000)
+      })
     },
     Component: Course,
   },
   {
     path: Routes.CourseModule,
     name: ({ moduleId, courseId }: PathArgs<Routes.CourseModule>) => {
-      const course = courses.find(({ id }) => id === courseId)
-      const module = course.modules.find(({ id }) => id === moduleId)
-      return module.name
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const course = courses.find(({ id }) => id === courseId)
+          const module = course.modules.find(({ id }) => id === moduleId)
+          resolve(module.name)
+        }, 1000)
+      })
     },
     Component: Module,
   },
@@ -44,10 +53,14 @@ const routes: RouteConfig[] = [
       courseId,
       sectionId,
     }: PathArgs<Routes.CourseSection>) => {
-      const course = courses.find(({ id }) => id === courseId)
-      const module = course.modules.find(({ id }) => id === moduleId)
-      const section = module.sections.find(({ id }) => id === sectionId)
-      return section.name
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const course = courses.find(({ id }) => id === courseId)
+          const module = course.modules.find(({ id }) => id === moduleId)
+          const section = module.sections.find(({ id }) => id === sectionId)
+          resolve(section.name)
+        }, 3000)
+      })
     },
     Component: Module,
   },

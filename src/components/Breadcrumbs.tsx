@@ -1,27 +1,42 @@
 import { Link, RouteChildrenProps } from 'react-router-dom'
+import React, { Suspense, useEffect, useState } from 'react'
 import { BreadcrumbList } from '../vite-env'
-import React from 'react'
 
 type BreadcrumbsProps = RouteChildrenProps & BreadcrumbList
 
 const Breadcrumbs = ({ crumbs, match }: BreadcrumbsProps) => {
   if (crumbs.length <= 1) return null
 
+  type BreadcrumbItem = { path: string; label: string; key: number }
+
+  const [state, setState] = useState<BreadcrumbItem[]>([])
+
+  const getCrumbs = () => {
+    return Promise.all(
+      crumbs.map(async ({ name = () => '', path }, key) => {
+        const label = await name(match.params)
+        return { path, label, key }
+      })
+    )
+  }
+
+  useEffect(() => {
+    getCrumbs().then(setState)
+  }, [])
+
   return (
     <nav>
-      {/* <ada-breadcrumbs> */}
-      {crumbs.map(({ name = () => '', path }, key) => {
-        // Linka do último para qualquer link anterior
-        const isLastCrumb = key + 1 === crumbs.length
-        return isLastCrumb ? (
-          <span key={key}>{name(match.params)}</span>
-        ) : (
-          <Link key={key} to={path}>
-            {name(match.params)}
-          </Link>
-        )
-      })}
-      {/* </ada-breadcrumbs> */}
+      <Suspense fallback="Carregando...">
+        {state.map(({ key, path, label }) => {
+          return key + 1 === crumbs.length ? (
+            <span key={key}>{label}</span>
+          ) : (
+            <Link key={key} to={path}>
+              {label}
+            </Link>
+          )
+        })}
+      </Suspense>
     </nav>
   )
 }
