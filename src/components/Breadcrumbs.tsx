@@ -1,5 +1,5 @@
-import { Link, RouteChildrenProps } from 'react-router-dom'
 import React, { Suspense, useEffect, useState } from 'react'
+import { Link, RouteChildrenProps } from 'react-router-dom'
 import { BreadcrumbList } from '../vite-env'
 
 type BreadcrumbsProps = RouteChildrenProps & BreadcrumbList
@@ -7,7 +7,7 @@ type BreadcrumbsProps = RouteChildrenProps & BreadcrumbList
 const Breadcrumbs = ({ crumbs, match }: BreadcrumbsProps) => {
   if (crumbs.length <= 1) return null
 
-  type BreadcrumbItem = { path: string; label: string; key: number }
+  type BreadcrumbItem = { path: string; label: string }
 
   const [state, setState] = useState<BreadcrumbItem[]>([])
 
@@ -25,9 +25,9 @@ const Breadcrumbs = ({ crumbs, match }: BreadcrumbsProps) => {
   }, [])
 
   return (
-    <nav>
+    <nav style={{ minHeight: `40px` }}>
       <Suspense fallback="Carregando...">
-        {state.map(({ key, path, label }) => {
+        {state.map(({ path, label }, key) => {
           return key + 1 === crumbs.length ? (
             <span key={key}>{label}</span>
           ) : (
