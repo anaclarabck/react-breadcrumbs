@@ -2,6 +2,7 @@ import { generatePath, Link } from 'react-router-dom'
 import { Routes } from '../config/routes'
 import service from '../infra/service'
 import React from 'react'
+import Breadcrumbs from '../components/Breadcrumbs'
 
 const Courses = () => {
   const courses = service.getCourses().map(({ id, name }) => {
@@ -11,6 +12,8 @@ const Courses = () => {
 
   return (
     <>
+      <Breadcrumbs />
+      
       <h2>Courses</h2>
 
       <ul>

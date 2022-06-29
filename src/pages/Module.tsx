@@ -1,4 +1,5 @@
 import { generatePath, Link, RouteChildrenProps } from 'react-router-dom'
+import Breadcrumbs from '../components/Breadcrumbs'
 import { Routes } from '../config/routes'
 import service from '../infra/service'
 import { PathArgs } from '../vite-env'
@@ -28,6 +29,8 @@ const Module = ({ match }: ModuleProps) => {
 
   return (
     <>
+      <Breadcrumbs />
+
       <h2>Module </h2>
 
       <ul>

@@ -1,4 +1,5 @@
 import { generatePath, Link, RouteChildrenProps } from 'react-router-dom'
+import Breadcrumbs from '../components/Breadcrumbs'
 import { Routes } from '../config/routes'
 import service from '../infra/service'
 import { PathArgs } from '../vite-env'
@@ -19,9 +20,10 @@ const Course = (props: CourseProps) => {
 
   return (
     <div>
+      <Breadcrumbs />
       <h2>{course.name} </h2>
       <section>
-        <ul>  
+        <ul>
           {modules.map(({ path, name }) => (
             <Link key={path} to={path}>
               {name}

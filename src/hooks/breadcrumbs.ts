@@ -1,9 +1,9 @@
 import { generatePath, RouteChildrenProps } from 'react-router-dom'
-import { RouteConfig } from '../vite-env'
+import { Breadcrumb } from '../vite-env'
 
 const useBreadcrumbs = (
-  routes: RouteConfig[],
-  { match }: RouteChildrenProps
+  routes: Breadcrumb[],
+  { match }: Pick<RouteChildrenProps, 'match'>
 ) => {
   return (
     routes

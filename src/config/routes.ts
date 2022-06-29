@@ -1,10 +1,6 @@
-import { PathArgs, RouteConfig } from '../vite-env'
+import { Breadcrumb, PathArgs } from '../vite-env'
 import delay from '../utilities/delay'
 import service from '../infra/service'
-import Courses from '../pages/Courses'
-import Course from '../pages/Course'
-import Module from '../pages/Module'
-import Home from '../pages/Home'
 
 enum Routes {
   Home = '/',
@@ -14,13 +10,12 @@ enum Routes {
   CourseSection = '/learn/course/:courseId/module/:moduleId/section/:sectionId',
 }
 
-const routes: RouteConfig[] = [
+const routes: Breadcrumb[] = [
   {
     path: Routes.Home,
     name: () => 'Home',
-    Component: Home,
   },
-  { path: Routes.Learn, name: () => 'Cursos', Component: Courses },
+  { path: Routes.Learn, name: () => 'Cursos' },
   {
     path: Routes.Course,
     name: (params: PathArgs<Routes.Course>) => {
@@ -29,7 +24,6 @@ const routes: RouteConfig[] = [
         resolve(course.name)
       }, 200)
     },
-    Component: Course,
   },
   {
     path: Routes.CourseModule,
@@ -39,7 +33,6 @@ const routes: RouteConfig[] = [
         resolve(module.name)
       }, 100)
     },
-    Component: Module,
   },
   {
     path: Routes.CourseSection,
@@ -49,7 +42,6 @@ const routes: RouteConfig[] = [
         resolve(section.name)
       }, 300)
     },
-    Component: Module,
   },
 ]
 
