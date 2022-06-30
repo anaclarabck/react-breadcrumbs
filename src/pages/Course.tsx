@@ -3,7 +3,6 @@ import Breadcrumbs from '../components/Breadcrumbs'
 import { Routes } from '../config/routes'
 import service from '../infra/service'
 import { PathArgs } from '../vite-env'
-import React from 'react'
 
 type CourseProps = RouteChildrenProps<PathArgs<Routes.Course>>
 

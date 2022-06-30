@@ -4,9 +4,8 @@ import Courses from './pages/Courses'
 import Course from './pages/Course'
 import Module from './pages/Module'
 import Home from './pages/Home'
-import React from 'react'
 
-const App = (): React.ReactElement => {
+const App = () => {
   return (
     <BrowserRouter>
       <main>

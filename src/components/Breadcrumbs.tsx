@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
 import useBreadcrumbs from '../hooks/breadcrumbs'
 import routes from '../config/routes'
