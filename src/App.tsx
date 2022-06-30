@@ -20,29 +20,29 @@ const App = () => {
           <Route
             exact
             path={Routes.Learn}
-            render={() => {
-              return <Courses />
+            render={(props) => {
+              return <Courses {...props} />
             }}
           />
           <Route
             exact
             path={Routes.Course}
             render={(props) => {
-              return <Course {...(props as any)} />
+              return <Course {...props} />
             }}
           />
           <Route
             exact
             path={Routes.CourseModule}
             render={(props) => {
-              return <Module {...(props as any)} />
+              return <Module {...props} />
             }}
           />
           <Route
             exact
             path={Routes.CourseSection}
             render={(props) => {
-              return <Module {...(props as any)} />
+              return <Module {...props} />
             }}
           />
         </Switch>

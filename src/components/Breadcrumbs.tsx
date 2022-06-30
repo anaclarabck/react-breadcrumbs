@@ -15,9 +15,9 @@ const Breadcrumbs = () => {
 
   const getCrumbs = () => {
     return Promise.all(
-      crumbs.map(async ({ name = () => '', path }, key) => {
+      crumbs.map(async ({ name = () => '', path }) => {
         const label = await name(match.params)
-        return { path, label, key }
+        return { path, label }
       })
     )
   }
