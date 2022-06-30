@@ -23,8 +23,16 @@ const Breadcrumbs = () => {
   }
 
   useEffect(() => {
-    getCrumbs().then(setState)
-  }, [])
+    let isCancelled = false
+    getCrumbs().then((crumbs) => {
+      if (!isCancelled) {
+        setState(crumbs)
+      }
+    })
+    return () => {
+      isCancelled = true
+    }
+  }, [crumbs])
 
   return (
     <nav style={{ minHeight: `40px` }}>
