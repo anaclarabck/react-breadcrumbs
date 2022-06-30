@@ -1,61 +1,49 @@
-import Courses from '../pages/Courses'
-import Course from '../pages/Course'
-import Home from '../pages/Home'
-import { PathArgs, RouteConfig } from '../vite-env'
-import Module from '../pages/Module'
-import { courses } from '../infra/courses'
+import { Breadcrumb, PathArgs } from '../vite-env'
+import delay from '../utilities/delay'
+import service from '../infra/service'
 
-const enum Routes {
+enum Routes {
   Home = '/',
   Learn = '/learn',
   Course = '/learn/course/:courseId',
   CourseModule = '/learn/course/:courseId/module/:moduleId',
-  CourseSection = '/learn/course/:courseId/module/:moduleId/section/:sectionId'
+  CourseSection = '/learn/course/:courseId/module/:moduleId/section/:sectionId',
 }
 
-const routes: RouteConfig[] = [
+const routes: Breadcrumb[] = [
   {
     path: Routes.Home,
     name: () => 'Home',
-    Component: Home,
   },
-  { path: Routes.Learn, name: () => 'Cursos', Component: Courses },
+  { path: Routes.Learn, name: () => 'Cursos' },
   {
     path: Routes.Course,
-    name: ({ courseId }: PathArgs<Routes.Course>) => {
-      const course = courses.find(({ id }) => id === courseId)
-      return course.name
+    name: (params: PathArgs<Routes.Course>) => {
+      return delay((resolve) => {
+        const course = service.getCourse(params)
+        resolve(course.name)
+      }, 200)
     },
-    Component: Course,
   },
   {
     path: Routes.CourseModule,
-    name: ({ moduleId, courseId }: PathArgs<Routes.CourseModule>) => {
-      const course = courses.find(({ id }) => id === courseId)
-      const module = course.modules.find(({ id }) => id === moduleId)
-      return module.name
+    name: (params: PathArgs<Routes.CourseModule>) => {
+      return delay((resolve) => {
+        const module = service.getModule(params)
+        resolve(module.name)
+      }, 100)
     },
-    Component: Module,
   },
   {
     path: Routes.CourseSection,
-    name: ({
-      moduleId,
-      courseId,
-      sectionId,
-    }: PathArgs<Routes.CourseSection>) => {
-      const course = courses.find(({ id }) => id === courseId)
-      const module = course.modules.find(({ id }) => id === moduleId)
-      const section = module.sections.find(({ id }) => id === sectionId)
-      return section.name
+    name: (params: PathArgs<Routes.CourseSection>) => {
+      return delay((resolve) => {
+        const section = service.getSection(params)
+        resolve(section.name)
+      }, 300)
     },
-    Component: Module,
   },
 ]
-
-type RouteKey = keyof Routes
-type RoutePath<K extends RouteKey> = Record<K, Routes[K]>
-export type { RouteKey, RoutePath }
 
 export { Routes }
 

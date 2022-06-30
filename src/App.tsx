@@ -1,36 +1,54 @@
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
-import Breadcrumbs from './components/Breadcrumbs'
-import { RouteConfig } from './vite-env'
-import useBreadcrumbs from './hooks/breadcrumbs'
-import routes from './config/routes'
-import React from 'react'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { Routes } from './config/routes'
+import Courses from './pages/Courses'
+import Course from './pages/Course'
+import Module from './pages/Module'
+import Home from './pages/Home'
 
-const Layout = (): React.ReactElement => {
+const App = () => {
   return (
     <BrowserRouter>
       <main>
         <Switch>
-          {routes.map(({ path, Component }: RouteConfig, key) => (
-            <Route
-              exact
-              path={path}
-              key={key}
-              render={(props) => {
-                const crumbs = useBreadcrumbs(routes, props)
-
-                return (
-                  <>
-                    <Breadcrumbs crumbs={crumbs} {...props} />
-                    <Component {...props} />
-                  </>
-                )
-              }}
-            />
-          ))}
+          <Route
+            exact
+            path={Routes.Home}
+            render={() => {
+              return <Home />
+            }}
+          />
+          <Route
+            exact
+            path={Routes.Learn}
+            render={(props) => {
+              return <Courses {...props} />
+            }}
+          />
+          <Route
+            exact
+            path={Routes.Course}
+            render={(props) => {
+              return <Course {...props} />
+            }}
+          />
+          <Route
+            exact
+            path={Routes.CourseModule}
+            render={(props) => {
+              return <Module {...props} />
+            }}
+          />
+          <Route
+            exact
+            path={Routes.CourseSection}
+            render={(props) => {
+              return <Module {...props} />
+            }}
+          />
         </Switch>
       </main>
     </BrowserRouter>
   )
 }
 
-export default <Layout />
+export default <App />

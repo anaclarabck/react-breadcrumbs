@@ -1,16 +1,20 @@
-import { generatePath, Link } from 'react-router-dom'
+import { Link, RouteChildrenProps } from 'react-router-dom'
+import Breadcrumbs from '../components/Breadcrumbs'
 import { Routes } from '../config/routes'
-import service from '../infra/service'
-import React from 'react'
+import { PathArgs } from '../vite-env'
+import Facade from '../infra/facade'
 
-const Courses = () => {
-  const courses = service.getCourses().map(({ id, name }) => {
-    const path = generatePath(Routes.Course, { courseId: id })
-    return { path, name }
-  })
+type CoursesProps = RouteChildrenProps<PathArgs<Routes.Learn>>
+
+const Courses = (props: CoursesProps) => {
+  const facade = Facade(props)
+
+  const courses = facade.getCourses()
 
   return (
     <>
+      <Breadcrumbs />
+
       <h2>Courses</h2>
 
       <ul>

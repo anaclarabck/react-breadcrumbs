@@ -1,27 +1,54 @@
-import { Link, RouteChildrenProps } from 'react-router-dom'
-import { BreadcrumbList } from '../vite-env'
-import React from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import { Link, useRouteMatch } from 'react-router-dom'
+import useBreadcrumbs from '../hooks/breadcrumbs'
+import routes from '../config/routes'
 
-type BreadcrumbsProps = RouteChildrenProps & BreadcrumbList
+const Breadcrumbs = () => {
+  const match = useRouteMatch()
+  const crumbs = useBreadcrumbs(routes, { match })
 
-const Breadcrumbs = ({ crumbs, match }: BreadcrumbsProps) => {
   if (crumbs.length <= 1) return null
 
+  type BreadcrumbItem = { path: string; label: string }
+
+  const [state, setState] = useState<BreadcrumbItem[]>([])
+
+  const getCrumbs = () => {
+    return Promise.all(
+      crumbs.map(async ({ name = () => '', path }) => {
+        const label = await name(match.params)
+        return { path, label }
+      })
+    )
+  }
+
+  useEffect(() => {
+    let isCancelled = false
+    getCrumbs().then((crumbs) => {
+      if (!isCancelled) {
+        setState(crumbs)
+      }
+    })
+    return () => {
+      isCancelled = true
+    }
+  }, [crumbs])
+
   return (
-    <nav>
-      {/* <ada-breadcrumbs> */}
-      {crumbs.map(({ name = () => '', path }, key) => {
-        // Linka do último para qualquer link anterior
-        const isLastCrumb = key + 1 === crumbs.length
-        return isLastCrumb ? (
-          <span key={key}>{name(match.params)}</span>
-        ) : (
-          <Link key={key} to={path}>
-            {name(match.params)}
-          </Link>
-        )
-      })}
-      {/* </ada-breadcrumbs> */}
+    <nav style={{ minHeight: `40px` }}>
+      <Suspense fallback="Carregando...">
+        {state.map(({ path, label }, key) => {
+          const isLast = key + 1 === crumbs.length
+
+          return isLast ? (
+            <span key={key}>{label}</span>
+          ) : (
+            <Link key={key} to={path}>
+              {label}
+            </Link>
+          )
+        })}
+      </Suspense>
     </nav>
   )
 }

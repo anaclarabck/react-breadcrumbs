@@ -1,33 +1,29 @@
-import { generatePath, Link, RouteChildrenProps } from 'react-router-dom'
+import { Link, RouteChildrenProps } from 'react-router-dom'
+import Breadcrumbs from '../components/Breadcrumbs'
 import { Routes } from '../config/routes'
-import service from '../infra/service'
 import { PathArgs } from '../vite-env'
-import React from 'react'
+import service from '../infra/service'
+import Facade from '../infra/facade'
+import pick from '../utilities/pick'
 
 type ModuleProps = RouteChildrenProps<PathArgs<Routes.CourseSection>>
 
-const Module = ({ match }: ModuleProps) => {
-  const { params } = match
+const Module = (props: ModuleProps) => {
+  const { params } = props.match
+
+  let sectionId = params.sectionId
+    ? pick(service.getSection(params), 'id')
+    : false
+
+  const facade = Facade(props)
 
   const module = service.getModule(params)
-
-  let sectionId = params.sectionId ? service.getSection(params).id : false
-
-  const sectionCards = module.sections.map(({ id, name, ...rest }) => {
-    const params = { ...match.params, sectionId: id }
-    const path = generatePath(Routes.CourseSection, params)
-
-    const lessons = rest.lessons.map(({ id, name }) => {
-      const params = { ...match.params, sectionId: id }
-      const path = generatePath(Routes.CourseSection, params)
-      return { id, path, name }
-    })
-
-    return { id, path, name, lessons }
-  })
+  const sectionCards = facade.getSections(module)
 
   return (
     <>
+      <Breadcrumbs />
+
       <h2>Module </h2>
 
       <ul>
