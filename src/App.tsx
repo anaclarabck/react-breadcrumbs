@@ -4,6 +4,11 @@ import Courses from './pages/Courses'
 import Course from './pages/Course'
 import Module from './pages/Module'
 import Home from './pages/Home'
+import Recordings from './pages/Recordings'
+import Projects from './pages/Projects'
+import Solution from './pages/Solution'
+import Lesson from './pages/Lesson'
+import Project from './pages/Project'
 
 const App = () => {
   return (
@@ -19,30 +24,65 @@ const App = () => {
           />
           <Route
             exact
-            path={Routes.Learn}
+            path={Routes.LEARN_PATH}
             render={(props) => {
               return <Courses {...props} />
             }}
           />
           <Route
             exact
-            path={Routes.Course}
+            path={Routes.LEARN_COURSE_PATH}
             render={(props) => {
               return <Course {...props} />
             }}
           />
           <Route
             exact
-            path={Routes.CourseModule}
+            path={Routes.LEARN_COURSE_PROJECTS_PATH}
+            render={(props) => {
+              return <Projects {...props} />
+            }}
+          />
+          <Route
+            exact
+            path={Routes.LEARN_COURSE_PROJECT_PATH}
+            render={(props) => {
+              return <Project {...props} />
+            }}
+          />
+          <Route
+            exact
+            path={Routes.LEARN_COURSE_LIVE_LECTURES}
+            render={(props) => {
+              return <Recordings {...props} />
+            }}
+          />
+          <Route
+            exact
+            path={Routes.LEARN_COURSE_SOLUTIONS_PATH}
+            render={(props) => {
+              return <Solution {...props} />
+            }}
+          />
+          <Route
+            exact
+            path={Routes.LEARN_COURSE_MODULE_PATH}
             render={(props) => {
               return <Module {...props} />
             }}
           />
           <Route
             exact
-            path={Routes.CourseSection}
+            path={Routes.LEARN_COURSE_SECTION_PATH}
             render={(props) => {
               return <Module {...props} />
+            }}
+          />
+          <Route
+            exact
+            path={Routes.LEARN_COURSE_LESSON_PATH}
+            render={(props) => {
+              return <Lesson {...props} />
             }}
           />
         </Switch>

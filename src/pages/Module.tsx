@@ -6,11 +6,12 @@ import service from '../infra/service'
 import Facade from '../infra/facade'
 import pick from '../utilities/pick'
 
-type ModuleProps = RouteChildrenProps<PathArgs<Routes.CourseSection>>
+type ModuleProps = RouteChildrenProps<
+  PathArgs<Routes.LEARN_COURSE_SECTION_PATH>
+>
 
 const Module = (props: ModuleProps) => {
   const { params } = props.match
-
   let sectionId = params.sectionId
     ? pick(service.getSection(params), 'id')
     : false
@@ -23,21 +24,27 @@ const Module = (props: ModuleProps) => {
   return (
     <>
       <Breadcrumbs />
-
       <h2>Module </h2>
-
       <ul>
-        {sectionCards.map(({ path, name, lessons, id }) => (
-          <details key={'details' + path} open={sectionId === id}>
-            <summary key={'details' + path}>
-              <Link to={path}>{name}</Link>
-            </summary>
+        {sectionCards.map((section) => {
+          const lessons = facade.getLessons(section)
+          const { path, name, id } = section
+          return (
+            <details key={'details' + path} open={sectionId === id}>
+              <summary key={'details' + path}>
+                <Link to={path}>{name}</Link>
+              </summary>
 
-            {lessons.map((lesson) => (
-              <article key={lesson.name}>{lesson.name}</article>
-            ))}
-          </details>
-        ))}
+              {lessons.map((lesson) => (
+                <article key={lesson.name}>
+                  <Link key={lesson.name} to={lesson.path}>
+                    {lesson.name}
+                  </Link>
+                </article>
+              ))}
+            </details>
+          )
+        })}
       </ul>
     </>
   )

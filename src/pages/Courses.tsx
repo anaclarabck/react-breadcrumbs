@@ -4,7 +4,7 @@ import { Routes } from '../config/routes'
 import { PathArgs } from '../vite-env'
 import Facade from '../infra/facade'
 
-type CoursesProps = RouteChildrenProps<PathArgs<Routes.Learn>>
+type CoursesProps = RouteChildrenProps<PathArgs<Routes.LEARN_PATH>>
 
 const Courses = (props: CoursesProps) => {
   const facade = Facade(props)

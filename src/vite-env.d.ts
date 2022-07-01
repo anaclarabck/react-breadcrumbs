@@ -7,23 +7,27 @@ interface Breadcrumb {
   name: (props: PathArgs<string>) => string | Promise<string>
 }
 
-
-type PathArgs<T extends string, U = string | number | boolean> = string extends T
-? { [k in string]?: U }
-: T extends `${infer _Start}:${infer ParamWithOptionalRegExp}/${infer Rest}`
-? ParamWithOptionalRegExp extends `${infer Param}(${infer _RegExp})`
-  ? ExtractRouteOptionalParam<Param, U> & ExtractRouteParams<Rest, U>
-  : ExtractRouteOptionalParam<ParamWithOptionalRegExp, U> & ExtractRouteParams<Rest, U>
-: T extends `${infer _Start}:${infer ParamWithOptionalRegExp}`
-? ParamWithOptionalRegExp extends `${infer Param}(${infer _RegExp})`
-  ? ExtractRouteOptionalParam<Param, U>
-  : ExtractRouteOptionalParam<ParamWithOptionalRegExp, U>
-: {};
+type PathArgs<
+  T extends string,
+  U = string | number | boolean
+> = string extends T
+  ? { [k in string]?: U }
+  : T extends `${infer _Start}:${infer ParamWithOptionalRegExp}/${infer Rest}`
+  ? ParamWithOptionalRegExp extends `${infer Param}(${infer _RegExp})`
+    ? ExtractRouteOptionalParam<Param, U> & ExtractRouteParams<Rest, U>
+    : ExtractRouteOptionalParam<ParamWithOptionalRegExp, U> &
+        ExtractRouteParams<Rest, U>
+  : T extends `${infer _Start}:${infer ParamWithOptionalRegExp}`
+  ? ParamWithOptionalRegExp extends `${infer Param}(${infer _RegExp})`
+    ? ExtractRouteOptionalParam<Param, U>
+    : ExtractRouteOptionalParam<ParamWithOptionalRegExp, U>
+  : {}
 
 interface Course {
   id: string
   name: string
   modules: CourseModule[]
+  projects: Project[]
 }
 
 interface CourseModule {
@@ -39,6 +43,11 @@ interface CourseSection {
 }
 
 interface CourseLesson {
+  id: string
+  name: string
+}
+
+interface Project {
   id: string
   name: string
 }
